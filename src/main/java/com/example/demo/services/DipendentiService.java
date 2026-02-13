@@ -9,6 +9,10 @@ import com.example.demo.exceptions.NotFoundException;
 import com.example.demo.payloads.DipendenteDTO;
 import com.example.demo.repositories.DipendentiRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,6 +30,16 @@ public class DipendentiService {
         this.dipendentiRepository = dipendentiRepository;
         this.cloudinary = cloudinary;
     }
+
+    public Page<Dipendente> findAll(int page, int size, String orderBy) {
+        if (size > 200 || size <= 0) size = 10;
+        if (page < 0) page = 0;
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
+        return dipendentiRepository.findAll(pageable);
+    }
+
+
 
     public Dipendente saveDipendente(DipendenteDTO payload) {
 

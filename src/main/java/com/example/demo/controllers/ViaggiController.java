@@ -1,11 +1,13 @@
 package com.example.demo.controllers;
 
+import com.example.demo.entities.Dipendente;
 import com.example.demo.entities.Viaggio;
 import com.example.demo.exceptions.ValidationException;
 import com.example.demo.payloads.StatoViaggioDTO;
 import com.example.demo.payloads.ViaggioDTO;
 import com.example.demo.services.ViaggiService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,16 @@ public class ViaggiController {
     public ViaggiController(ViaggiService viaggiService) {
         this.viaggiService = viaggiService;
     }
+
+    @GetMapping
+    public Page<Viaggio> findAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "nome") String orderBy
+    ){
+        return this.viaggiService.findAll(page, size, orderBy);
+    }
+
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

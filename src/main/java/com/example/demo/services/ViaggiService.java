@@ -7,6 +7,10 @@ import com.example.demo.exceptions.NotFoundException;
 import com.example.demo.payloads.ViaggioDTO;
 import com.example.demo.repositories.ViaggiRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,6 +19,14 @@ import org.springframework.stereotype.Service;
 public class ViaggiService {
 
     private final ViaggiRepository viaggiRepository;
+
+    public Page<Viaggio> findAll(int page, int size, String orderBy) {
+        if (size > 200 || size <= 0) size = 10;
+        if (page < 0) page = 0;
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
+        return viaggiRepository.findAll(pageable);
+    }
 
 
     public ViaggiService(ViaggiRepository viaggiRepository) {

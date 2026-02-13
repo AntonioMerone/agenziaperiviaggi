@@ -14,13 +14,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping
+@RequestMapping("/prenotazioni")
 public class PrenotazioniController {
     private final PrenotazioniService prenotazioniService;
 
     public PrenotazioniController(PrenotazioniService prenotazioniService){
         this.prenotazioniService = prenotazioniService;
     }
+
+
 
     @GetMapping
     public Page<Prenotazione> findAll(

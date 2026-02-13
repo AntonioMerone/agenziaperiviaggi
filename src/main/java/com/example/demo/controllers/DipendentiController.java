@@ -65,7 +65,7 @@ public class DipendentiController {
     }
 
     //upload cover (l'avatar)
-    @PostMapping("/{dipendenteId}/avatar")
+    @PatchMapping("/{dipendenteId}/avatar")
     public Dipendente uploadAvatar(
             @PathVariable long dipendenteId,
             @RequestParam("avatar") MultipartFile file) {

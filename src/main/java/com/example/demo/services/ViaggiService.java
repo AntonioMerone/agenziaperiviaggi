@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 
+import com.example.demo.entities.StatoViaggio;
 import com.example.demo.entities.Viaggio;
 import com.example.demo.exceptions.NotFoundException;
 import com.example.demo.payloads.ViaggioDTO;
@@ -44,6 +45,19 @@ public class ViaggiService {
         log.info("viaggio aggiornato. id={}", viaggioId);
         return updated;
 
+    }
+
+    public Viaggio UpdateStatoViaggio(long viaggioId, StatoViaggio newViaggioAggiornato){
+        Viaggio found = this.findById(viaggioId);
+        found.setStatoViaggio(newViaggioAggiornato);
+        return viaggiRepository.save(found);
+    }
+
+
+    public void findByIdAndDelete(long viaggioId){
+        Viaggio found = findById(viaggioId);
+        viaggiRepository.delete(found);
+        log.info("Viaggio cancellato/eliminato. id={}", viaggioId);
     }
 }
 
